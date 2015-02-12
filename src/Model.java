@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by Проф on 10.02.2015.
  * Brainfuck language interpreter
  * used memory
- * char[] arr = chars[30000]
+ * short[] arr = chars[30000]
  * used operators
  * >    shift pointer right     pointer++
  * <    shift pointer left      pointer--
@@ -22,24 +22,21 @@ public class Model {
 
     private static final int STACK_LENGHT = 30000;
     private static short[] arr = new short[STACK_LENGHT];
-
-
     //private static String strCommand = "----[---->+<]>++.";
     private static String strCommand = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
     //private static String strCommand = "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++.[-]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.[-]+++++++++++++++++++++++++++++++++.[-]++++++++++.[-]";
 
     public static void main(String[] args) {
-        execute(strCommand);
+        System.out.println(interprete(strCommand));
     }
 
-    public static void execute(String strCommand) {
+    public static String interprete(String strCommand) {
+        StringBuilder retString = new StringBuilder();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         char[] cmd_stack = strCommand.toCharArray();
         int cmd_pointer = 0;    //command pointer
         int pointer = 0;        //memory pointer
         ArrayList<Integer> queue = new ArrayList<Integer>();
-
-        System.out.println("===== Output =====");
 
         while (cmd_pointer < cmd_stack.length) {
             switch (cmd_stack[cmd_pointer]) {
@@ -62,7 +59,7 @@ public class Model {
                     cmd_pointer++;
                     break;
                 case '.':
-                    System.out.print((char) arr[pointer]);
+                    retString.append((char) arr[pointer]);
                     cmd_pointer++;
                     break;
                 case ',':
@@ -87,12 +84,6 @@ public class Model {
 
             }
         }
-        System.out.println();
-        System.out.println("===== Final memory dump =====");
-        for (int i = 0; i < 10; i++) {
-            System.out.println("arr[" + i + "] " + arr[i]);
-        }
-
-
+        return retString.toString();
     }
 }
